@@ -10,41 +10,35 @@ class BankAccount(object):
         self._lock = threading.Lock()
 
     def get_balance(self):
-        if self.oppened == False:
-            raise ValueError("Account Closed!")
+        if not self.oppened : raise ValueError("Account is closed")
         return self.balance
 
     def open(self):
-        if self.oppened == 1:
-            raise ValueError("Account Is Already Open!")
+        if self.oppened: raise ValueError("Account is already open!")
         with self._lock:
             self.oppened = True
 
     def deposit(self, amount):
-        if self.oppened == False:
-            raise ValueError("Account Closed!")
-        if amount < 0:
-            raise ValueError("Negative deposits are not allowed!")
+        if not self.oppened: raise ValueError("Account is closed")
+        if amount < 0: raise ValueError("Negative deposits are not allowed")
+
         with self._lock:
             copy = self.balance
             copy += amount
             self.balance = copy
 
     def withdraw(self, amount):
-        if self.oppened == False:
-            raise ValueError("Account Closed!")
-        if amount > self.balance:
-            raise ValueError("Insufficient funds to withdraw!")
-        if amount < 0:
-            raise ValueError("Negative withdrawls are not allowed!")
+        if not self.oppened: raise ValueError("Account is closed")
+        if amount > self.balance: raise ValueError("Insufficient funds to withdraw")
+        if amount < 0: raise ValueError("Negative withdrawls are not allowed")
+
         with self._lock:
             copy = self.balance
             copy -= amount
             self.balance = copy
 
     def close(self):
-        if self.oppened == False:
-            raise ValueError("Account Closed!")
+        if not self.oppened : raise ValueError("Account is closed")
         with self._lock:
             self.oppened = False
             self.balance = 0

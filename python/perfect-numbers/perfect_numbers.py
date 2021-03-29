@@ -1,6 +1,5 @@
 def classify(number):
-    if number <= 0:
-        raise ValueError('the number must be natural')
+    if number <= 0: raise ValueError('the number must be natural')
 
     aliquote_sum = sum([factor for factor in range(1, number) if number%factor == 0])
 
